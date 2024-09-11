@@ -3,6 +3,7 @@ const canvas = document.getElementById('curva');
 const ctx = canvas.getContext('2d');
 const inputVelocidad = document.getElementById('velocidad');
 const inputAmplitud = document.getElementById('amplitud');
+const inputColors = document.getElementById('colors');
 let face=0;
 
 // creacion de la clase
@@ -10,12 +11,18 @@ class Curva{
     constructor(funcion, dx = 0){
         this.funcion = funcion;
         this.dx = dx;
+        this.colors = ['red','blue','green','yellow','purple','orange','pink','white'];
+        this.colorTarget= this.colors[Math.floor(Math.random()*this.colors.length)];
     }
     dibujar(){
         ctx.beginPath();
         for (let x = 0; x < canvas.width; x++) {
             let y = this.funcion(x, this.dx);
-            ctx.strokeStyle = 'white';
+            if(inputColors.checked){
+                ctx.strokeStyle = this.colorTarget;
+            }else{
+                ctx.strokeStyle = 'white';
+            }
             ctx.lineTo(x, y);
         }
         ctx.stroke();
