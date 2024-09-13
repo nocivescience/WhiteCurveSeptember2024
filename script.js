@@ -5,21 +5,21 @@ const inputVelocidad = document.getElementById('velocidad');
 const inputAmplitud = document.getElementById('amplitud');
 const inputColors = document.getElementById('colors');
 let face=0;
+const colors = ['red','blue','green','yellow','purple','orange','pink','white'];
 
 // creacion de la clase
 class Curva{
-    constructor(funcion, dx = 0){
+    constructor(funcion, color, dx = 0){
         this.funcion = funcion;
         this.dx = dx;
-        this.colors = ['red','blue','green','yellow','purple','orange','pink','white'];
-        this.colorTarget= this.colors[Math.floor(Math.random()*this.colors.length)];
+        this.color = color;
     }
     dibujar(){
         ctx.beginPath();
         for (let x = 0; x < canvas.width; x++) {
             let y = this.funcion(x, this.dx);
             if(inputColors.checked){
-                ctx.strokeStyle = this.colorTarget;
+                ctx.strokeStyle = this.color;
             }else{
                 ctx.strokeStyle = 'white';
             }
@@ -59,7 +59,7 @@ function generarCurvas(){
     curvas = [];
     for (let i = 0; i < funcionesSinuidales.length; i++) {
         face+=.01*inputVelocidad.value;
-        curvas.push(new Curva(funcionesSinuidales[i],face));
+        curvas.push(new Curva(funcionesSinuidales[i], colors[i%colors.length], face));
     }
 }
 
